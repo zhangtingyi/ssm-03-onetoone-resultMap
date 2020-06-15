@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.dao.OrdersDao">
+
+	 <resultMap type="Orders" id="orderCustomerResultMap">
+		<!-- 完成订单信息的映射配置 -->
+		<!-- id：订单关联客户查询的唯一标识  -->
+		<id column="c_id" property="id"/>
+		<result column="c_id" property="c_id"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 接下来完成关联客户信息的映射	 -->
+		<association property="customer" javaType="Customer">
+			<!-- id：关联信息的唯一标识  -->
+			<!-- property： 要映射到customer的哪个属性中-->
+			<id column="c_id" property="id"/>
+			<!-- result就是普通列的映射 -->
+			<result column="username" property="username"/>
+			<result column="birthday" property="birthday"/>
+			<result column="sex" property="sex"/>
+			<result column="address" property="address"/>
+		</association>
+</resultMap>
+	 
+	 
+	 <select id="findOrderList" resultMap="orderCustomerResultMap">
+		SELECT
+		*
+		FROM
+		orders,
+		CUSTOMER
+		WHERE orders.c_id = customer.id	 
+	 </select>
+	 
+</mapper>
+    
